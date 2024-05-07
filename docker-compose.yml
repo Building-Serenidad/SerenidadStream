@@ -8,7 +8,7 @@ services:
     container_name: rtmp_server
     volumes:
       - ./data:/tmp/hls
-      - ./certs:/certs  
+      - ./SerenidadStream/certs:/certs
   auth:
     build: ./auth
     container_name: auth_server
