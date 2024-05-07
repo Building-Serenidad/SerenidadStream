@@ -9,7 +9,6 @@ services:
     volumes:
       - ./data:/tmp/hls
       - /etc/letsencrypt:/etc/letsencrypt:ro
-
   auth:
     build: ./auth
     container_name: auth_server
