@@ -5,10 +5,18 @@ services:
     ports:
       - "1935:1935"
       - "80:8080"
+      - "443:8443"  # Added for HTTPS
     container_name: rtmp_server
     volumes:
       - ./data:/tmp/hls
-      - ./SerenidadStream/certs:/certs
+      - ./SerenidadStream/certs:/etc/letsencrypt  # Updated path
   auth:
     build: ./auth
     container_name: auth_server
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./SerenidadStream/certs:/etc/letsencrypt
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      - rtmp
