@@ -3,20 +3,19 @@ services:
   rtmp:
     build: ./rtmp
     ports:
-      - "1935:1935"      # RTMP port
-      - "8080:8080"      # HTTP port
-      - "8443:8443"      # HTTPS port, adjusted to match NGINX
+      - "1935:1935"
+      - "8080:8080"
+      - "8443:8443"
     container_name: rtmp_server
     volumes:
-      - ./data:/tmp/hls
-      - ./SerenidadStream/certs:/root/SerenidadStream/certs  # Ensure path matches NGINX config
+      - ~/SerenidadStream/certs:/certs
   auth:
     build: ./auth
     container_name: auth_server
   certbot:
     image: certbot/certbot
     volumes:
-      - ./SerenidadStream/certs:/etc/letsencrypt  # Ensure this is used correctly for renewal if needed
+      - /home/username/SerenidadStream/certs:/etc/letsencrypt
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
     depends_on:
       - rtmp
