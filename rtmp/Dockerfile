@@ -1,14 +1,9 @@
-# Using tiangolo/nginx-rtmp as the base image
+# Using tiangolo/nginx-rtmp as the base image, based on Debian
 FROM tiangolo/nginx-rtmp
 
-# Install software-properties-common to manage repositories, and then add the universe repository
+# Update apt and install Certbot without adding unnecessary repositories
 RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository universe && \
-    apt-get update
-
-# Install Certbot and its Nginx plugin
-RUN apt-get install -y certbot python3-certbot-nginx
+    apt-get install -y certbot python3-certbot-nginx
 
 # Copy the Nginx configuration files and web content
 COPY nginx.conf /etc/nginx/nginx.conf
