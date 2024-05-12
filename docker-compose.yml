@@ -3,12 +3,15 @@ services:
   rtmp:
     build: ./rtmp
     ports:
-      - "1935:1935"
-      - "80:8080"
+      - "1935:1935"  # RTMP port
+      - "80:8080"    # HTTP port
+      - "443:443"    # HTTPS port
     container_name: rtmp_server
     volumes:
       - ./data:/tmp/hls
-      - ./SerenidadStream/certs:/certs
+      - ./SerenidadStream/certs:/etc/letsencrypt  # Updated volume for SSL certificates
+    environment:
+      - EMAIL=thomas@serenidad.app  # Certbot email, replace with your actual email
   auth:
     build: ./auth
     container_name: auth_server
