@@ -1,11 +1,9 @@
 FROM tiangolo/nginx-rtmp
 
 # Install Certbot for SSL certificate generation
+# Assuming you are using a Debian-based image
 RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository universe && \
-    apt-get update && \
-    apt-get install -y certbot python3-certbot-nginx
+    apt-get install -y software-properties-common certbot python3-certbot-nginx
 
 # Copy your existing configuration files
 COPY nginx.conf /etc/nginx/nginx.conf
