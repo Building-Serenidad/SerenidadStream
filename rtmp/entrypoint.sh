@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Stop nginx service if running (optional depending on your setup)
+# Ensure nginx is not running yet
 service nginx stop
 
-# Log the existing certificates (add this line for debugging)
-ls -la /etc/letsencrypt/live/serenidad.click/
+# Make sure directory exists for webroot challenge
+mkdir -p /www/letsencrypt
 
-# Generate or renew the certificates
-certbot certonly --standalone --preferred-challenges http -d serenidad.click -d www.serenidad.click --non-interactive --agree-tos --email your-email@example.com --force-renewal
+# Try to renew or get new certificates
+certbot certonly --webroot --webroot-path=/www/letsencrypt -d serenidad.click -d www.serenidad.click --email your-email@example.com --agree-tos --non-interactive --verbose --logs-dir /var/log/letsencrypt
 
-# Log the certificates again after renewal attempt
+# Check certificates
 ls -la /etc/letsencrypt/live/serenidad.click/
 
 # Start nginx

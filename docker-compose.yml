@@ -9,7 +9,7 @@ services:
     container_name: rtmp_server
     volumes:
       - ./data:/tmp/hls
-      - ./SerenidadStream/certs:/etc/letsencrypt  # Updated volume for SSL certificates
+      - ./SerenidadStream/certs:/etc/letsencrypt
     environment:
       - EMAIL=thomas@serenidad.app  # Certbot email, replace with your actual email
   auth:
