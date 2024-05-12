@@ -4,18 +4,11 @@ services:
     build: ./rtmp
     ports:
       - "1935:1935"
-      - "8080:8080"
-      - "8443:8443"
+      - "80:8080"
     container_name: rtmp_server
     volumes:
-     - ~/SerenidadStream/certs:/certs
+      - ./data:/tmp/hls
+      - ./SerenidadStream/certs:/certs
   auth:
     build: ./auth
     container_name: auth_server
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - /home/username/SerenidadStream/certs:/etc/letsencrypt
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    depends_on:
-      - rtmp
